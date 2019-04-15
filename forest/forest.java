@@ -2,7 +2,8 @@ import java.util.*;
 
 public class forest{
 	public static int c;
-
+	public static final double pi = 3.141592653589793;
+	
 	public static void main(String[] args){
 		Scanner in = new Scanner(System.in);
 		int n = in.nextInt();
@@ -16,7 +17,7 @@ public class forest{
 		}
 
 		int refIndex = 0;
-		for(int i = 1; i < pts.length; i++){
+		for(int i = 1; i < n; i++){
 			if (pts[i].y < pts[refIndex].y || (pts[i].y == pts[refIndex].y && pts[i].x < pts[refIndex].x))
 				refIndex = i;
 		}
@@ -29,9 +30,20 @@ public class forest{
 
 	public static void superGrahamScan(pt[] pts){
 
+		double perimmiter = 0;
 		double area = 0;
-		double res = 0;
-		if(pts.length > 2) {
+		if(pts.length == 1){
+			perimmiter = 2*pi*c;
+			area = pi*c*c;
+		} else if(pts.length == 2){
+			if (c > 0){
+				perimmiter = 2*pi*c + 2*pts[0].dist(pts[1]);
+			} else{
+				perimmiter = pts[0].dist(pts[1]);
+			}
+			area = pi*c*c + 2*pts[0].dist(pts[1])*c;
+		} else if(pts.length > 2){
+
 			Arrays.sort(pts);
 
 			Stack<pt> myStack = new Stack<pt>();
@@ -53,42 +65,35 @@ public class forest{
 				myStack.push(cur);
 			}
 
-			//calculate area of scan minus border.
+			//calculate perem of graham scan
+			double res = 0;
+			ArrayList<pt> vertexes = new ArrayList<pt>();
+			vertexes.add(pts[0]);
 			pt cur = pts[0];
-			pt x = cur,y = null,z = null;
 			while(myStack.size() > 0){
+
 				pt next = myStack.pop();
+				vertexes.add(next);
 				res += cur.dist(next);
 				cur = next;
-
-				if(y ==  null){
-					y = cur;
-				} else if(z == null){
-					z = cur;
-				}
-
-				if(y!=null&&z!=null){
-
-					if(myStack.size()>0){
-						// System.out.println(x + " " + y + " " + z);
-						area += 0.5 * x.getVect(y).crossMag(x.getVect(z));
-					}
-
-					z = y;
-					y = null;
-				}
 			}
-		} else if (pts.length > 1){
-			res = pts[0].dist(pts[1]);
-		} else if (pts.length == 0){
-			c = 0;
+
+			//calc area of area enclosed by graham scan
+			double a = 0;
+			pt x = vertexes.get(0);
+			pt y = vertexes.get(1);
+			pt z = null;
+			for(int i = 2; i < vertexes.size(); i++){
+				z = vertexes.get(i);
+				a += 0.5 * x.getVect(y).crossMag(x.getVect(z));
+				y = z;
+			}
+
+			perimmiter = 2*pi*c + res;
+			area = pi*c*c + c*res + a;
 		}
-		double rectangles = c*res;
-		double corners = Math.PI*c*c;
-		double tarea = area + rectangles + corners;
-		double perimmiter = 2*Math.PI*c + res;
-		
-		System.out.printf("%.2f %.2f\n",perimmiter,tarea);
+
+		System.out.printf("%.2f %.2f\n",perimmiter,area);
 	}
 }
 
