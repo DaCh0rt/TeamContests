@@ -34,7 +34,16 @@ public class jumpman{
 
 			visited = new boolean[r][c];
 			visited[x][y] = true;
-			long ans = treasure[x][y] + dfs(x,y);
+			dfs(x,y, new boolean[r][c]);
+
+			long ans = 0;
+			for(int j = 0; j < r; j++){
+				for(int k = 0; k < c; k++){
+					if(visited[j][k])
+						ans += treasure[j][k];
+				}
+			}
+
 			System.out.println(ans);
 		}
 	}
@@ -52,26 +61,21 @@ public class jumpman{
 		return true;
 	}
 
-	static long dfs(int px, int py){
-
-		long ans = 0;
-
+	static void dfs(int px, int py, boolean[][] v){
 		for(int i = 0; i < 4; i++){
 			int ax = px + dx[i];
 			int ay = py + dy[i];
 
 			if(inBound(ax,ay)){
 				if(!visited[ax][ay]){
-					ans += treasure[ax][ay];
-					visited[ax][ay] = true;
-
 					if(!(grid[ax][ay]-grid[px][py]>j)){
-						ans += dfs(ax,ay);
+						visited[ax][ay] = true;
+						v[ax][ay] = true;
+						dfs(ax,ay,v);
+						v[ax][ay] = false;
 					}
 				}
 			}
 		}
-
-		return ans;
 	}
 }
