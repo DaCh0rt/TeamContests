@@ -17,12 +17,14 @@ public class safety{
 				x += jscore[j];
 			}
 
-			double high = 2*x/n - 1e-12;
+			
+			double high = 2.0*x/n;
 			double low = 0;
 			int remaining = 1000;
 			while(remaining>0){
 
-				double guess = (high+low)/2 - 1e-12;
+				double guess = (high+low)/2;
+				// System.out.println("guess: " + guess + " high: " + high + " low: " + low);
 				double sum = 0;
 				double tmp = 0;
 				Arrays.fill(ascore,0);
