@@ -1,13 +1,10 @@
-//ian harvey
-//cop4516
-
-
 import java.util.*;
 
 public class genetics
 {
 	public static void main(String[] args)
 	{
+		//init vars
 		Scanner input = new Scanner(System.in);
 		int numCases = input.nextInt();
 		String original;
@@ -19,8 +16,10 @@ public class genetics
 		int tempTwo;
 		String baseFour;
 
+		//run thru cases
 		for(int i = 0; i < numCases; i++)
 		{
+			//read in line
 			original = input.next();
 			total = 0;
 			count = 0;
@@ -71,6 +70,7 @@ public class genetics
 				}
 			}
 
+			//done,print ans
 			System.out.println("Sequence #" + (i+1) + ": " + result);
 		}
 	}

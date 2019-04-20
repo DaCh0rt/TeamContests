@@ -9,6 +9,7 @@ public class forest{
 		int n = in.nextInt();
 		c = in.nextInt();
 
+		//read in points
 		pt[] pts = new pt[n];
 		for(int i = 0; i < n; i++){
 			int x = in.nextInt();
@@ -16,6 +17,7 @@ public class forest{
 			pts[i] = new pt(x,y);
 		}
 
+		//find the bottom, leftmost point
 		int refIndex = 0;
 		for(int i = 1; i < n; i++){
 			if (pts[i].y < pts[refIndex].y || (pts[i].y == pts[refIndex].y && pts[i].x < pts[refIndex].x))
@@ -32,6 +34,8 @@ public class forest{
 
 		double perimmiter = 0;
 		double area = 0;
+
+		//get the 1 and 2 points base case
 		if(pts.length == 1){
 			perimmiter = 2*pi*c;
 			area = pi*c*c;
@@ -42,14 +46,16 @@ public class forest{
 				perimmiter = pts[0].dist(pts[1]);
 			}
 			area = pi*c*c + 2*pts[0].dist(pts[1])*c;
-		} else if(pts.length > 2){
+		} else if(pts.length > 2){//else do the graham scan
 
 			Arrays.sort(pts);
 
+			//init stack
 			Stack<pt> myStack = new Stack<pt>();
 			myStack.push(pts[0]);
 			myStack.push(pts[1]);
 
+			//push only left turns on
 			for(int i = 2; i < pts.length; i++){
 				pt cur = pts[i];
 				pt mid = myStack.pop();

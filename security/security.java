@@ -4,24 +4,30 @@ public class security{
 	public static void main(String[] args){
 		Scanner in = new Scanner(System.in);
 
+		//read in cases and run thru them
 		int c = in.nextInt();
 		for(int i = 0; i < c; i++){
 
+			//read in num rooms and the height and width of building
 			int n = in.nextInt();
 			int a = in.nextInt();
 			int b = in.nextInt();
 			point[] rooms = new point[n];
+
+			//convert room numbers to points
 			for(int j = 0; j < n; j++){
 				int room = in.nextInt();
 
 				rooms[j] = new point(room%100,room/100);
 			}
 
+			//init graph
 			ArrayList<edge>[] graph = new ArrayList[n];
 			for(int j = 0; j < n; j++){
 				graph[j] = new ArrayList<edge>();
 			}
 
+			//calculate distances between each pair of points given definition
 			for(int j = 0; j < n; j++){
 				for(int k = j + 1; k < n; k++){
 
@@ -31,6 +37,7 @@ public class security{
 				}
 			}
 
+			//prims and print
 			System.out.println(mst(graph,0));
 		}	
 	}

@@ -5,12 +5,15 @@ public class extraset{
 
 		Scanner in = new Scanner(System.in);
 
+		//read in cases run thru them
 		int c = in.nextInt();
 		for(int i = 0; i < c; i++){
 
+			//read in atributes, and num cards
 			int k = in.nextInt();
 			int n = in.nextInt();
 
+			//read in cards
 			StringBuilder card = new StringBuilder(k);
 			HashSet<String> cardset = new HashSet<String>();
 			String[] cardArr = new String[n];
@@ -23,6 +26,7 @@ public class extraset{
 				cardArr[j] = card.toString();
 			}
 
+			//pick 2 cards see how many sets we can make with them and a 3rd
 			int total = 0;
 			boolean[] used = new boolean[3];
 			for(int x = 0; x < n; x++){
@@ -30,6 +34,7 @@ public class extraset{
 
 					card.setLength(0);
 
+					//make the card we need
 					for(int z = 0; z < k; z++){
 						Arrays.fill(used,false);
 
@@ -50,16 +55,16 @@ public class extraset{
 						}
 					}
 
+					//look if we have the matching card in our deck
 					if(cardset.contains(card.toString())){
 						total++;
 					}
 				}
 			}
 
+			//we tripple counted b/c if we pick cards x and then y the 3rd card could be z x y, x z y, or x y z
 			total /= 3;
 			System.out.println(total);
-
-
 		}
 	}
 }

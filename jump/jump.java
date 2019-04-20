@@ -7,6 +7,7 @@ public class jump
 	public static void main(String[] args)
 	{
 
+		//init vars
 		Scanner input = new Scanner(System.in);
 		int numCases = input.nextInt();
 		int numBlocks;
@@ -15,21 +16,26 @@ public class jump
 		int maxDown;
 		boolean used[];
 
+		//run thru cases
 		for(int i = 0; i < numCases; i++)
 		{
+			//read input and init
 			numBlocks = input.nextInt();
 			validCounter = 0;
 			blocks = new int[numBlocks];
 			used = new boolean[numBlocks];
 
+			//read each block
 			for(int j = 0; j < numBlocks; j++)
 			{
 				blocks[j] = input.nextInt();
 			}
 
+			//read params
 			maxUp = input.nextInt();
 			maxDown = input.nextInt();
 
+			//perm and print
 			printperms(blocks, new int[numBlocks], used, 0, maxUp, maxDown);
 			System.out.println(validCounter);
 		}
@@ -40,8 +46,10 @@ public class jump
 		int difference;
 		boolean weBroke = false;
 
+		//if we have filled out a perm
 		if(k == perm.length)
 		{
+			//validate the perm
 			for(int z = 0; z < perm.length -1; z++)
 			{
 				difference = perm[z] - perm[z+1];
@@ -65,6 +73,7 @@ public class jump
 				validCounter++;
 		}
 
+		//perm
 		for(int i = 0; i < perm.length; i++)
 		{
 			if(!used[i])
