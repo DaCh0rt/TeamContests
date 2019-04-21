@@ -20,24 +20,27 @@ public class safety{
 			
 			double high = 2.0*x/n;
 			double low = 0;
-			int remaining = 1000;
+			double sum = 0;
+			int remaining = 250000;
+			final double epsilon = 0;
 			while(remaining>0){
 
 				double guess = (high+low)/2;
 				// System.out.println("guess: " + guess + " high: " + high + " low: " + low);
-				double sum = 0;
+				sum = 0;
 				double tmp = 0;
-				Arrays.fill(ascore,0);
 				for(int j = 0; j < n; j++){
-					if((tmp = guess - jscore[j])>0){
+					if((tmp = guess - jscore[j])>epsilon){
 						ascore[j] = tmp;
 						sum += tmp;
+					} else {
+						ascore[j] = 0;
 					}
 				}
 
-				if(sum > x)
+				if(sum-x>epsilon)
 					high = guess;
-				else if(sum < x)
+				else if(sum-x<epsilon)
 					low = guess;
 				else
 					break;
@@ -45,8 +48,9 @@ public class safety{
 				remaining--;
 			}
 
+			// System.out.print("Case #" + (i+1) + ": ");
 			for(int j = 0; j < n; j++){
-				System.out.printf("%f ",100*ascore[j]/x);
+				System.out.printf("%f ",100*ascore[j]/sum);
 			}
 			System.out.println();
 
